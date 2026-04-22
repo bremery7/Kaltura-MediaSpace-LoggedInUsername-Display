@@ -73,6 +73,8 @@
         }
         
         parentDiv.appendChild(userDisplayElement);
+        
+        setTimeout(attachMenuRepositioning, 200);
     }
     
     function updateUserDisplay() {
@@ -140,10 +142,8 @@
         }
     }
     
-    attachMenuRepositioning();
-    
-    const observer = new MutationObserver(attachMenuRepositioning);
-    observer.observe(document.body, {
+    const menuObserver = new MutationObserver(attachMenuRepositioning);
+    menuObserver.observe(document.body, {
         childList: true,
         subtree: true
     });
