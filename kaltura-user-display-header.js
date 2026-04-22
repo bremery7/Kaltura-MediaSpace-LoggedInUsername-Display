@@ -111,4 +111,40 @@
     document.body.addEventListener('userDetailsPopulated', function() {
         updateUserDisplay();
     });
+    
+    function repositionUserMenu() {
+        setTimeout(function() {
+            const menu = document.querySelector('[role="menu"][aria-labelledby="userMenuToggleBtn"]');
+            if (!menu) return;
+            
+            const usernameElement = document.getElementById('kms-username-display');
+            if (!usernameElement) return;
+            
+            const menuParent = menu.parentElement;
+            if (!menuParent) return;
+            
+            const usernameRect = usernameElement.getBoundingClientRect();
+            const menuRect = menuParent.getBoundingClientRect();
+            
+            const offsetX = usernameRect.right - menuRect.right;
+            
+            menuParent.style.transform = `translateX(${offsetX}px)`;
+        }, 50);
+    }
+    
+    function attachMenuRepositioning() {
+        const userMenuButton = document.querySelector('[aria-label="user menu"]');
+        if (userMenuButton && !userMenuButton.dataset.repositionAttached) {
+            userMenuButton.addEventListener('click', repositionUserMenu);
+            userMenuButton.dataset.repositionAttached = 'true';
+        }
+    }
+    
+    attachMenuRepositioning();
+    
+    const observer = new MutationObserver(attachMenuRepositioning);
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 })();
