@@ -53,7 +53,7 @@
         userDisplayElement.style.cssText = `
             font-size: 14px;
             font-weight: 500;
-            color: inherit;
+            color: #ffffff;
             white-space: nowrap;
             text-decoration: none;
             cursor: pointer;
